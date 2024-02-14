@@ -2,18 +2,18 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: swiggy-app
-          uri: lb://SWIGGY-APP
+        - id: manufacture-app
+          uri: lb://MANUFACTURE-APP
           predicates:
-            - Path=/swiggy/**
+            - Path=/manufacture/**
           filters:
             - AuthenticationFilter
 
 
-        - id: restaurant-service
-          uri: lb://RESTAURANT-SERVICE
+        - id: expert-service
+          uri: lb://EXPERT-SERVICE
           predicates:
-            - Path=/restaurant/**
+            - Path=/experts/**
           filters:
             - AuthenticationFilter
 
@@ -23,7 +23,7 @@ spring:
             - Path=/auth/**
 
   application:
-    name: SWIGGY-GATEWAY
+    name: MANUFACTURE-GATEWAY
 
 eureka:
   client:
