@@ -1,0 +1,6 @@
+rootProject.name = 'manufacturing1'
+include 'expert-service'
+include 'order-service'
+include 'identity-service'
+include 'manufacture-gateway'
+
