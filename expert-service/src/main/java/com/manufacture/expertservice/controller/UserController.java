@@ -9,7 +9,8 @@ import com.manufacture.expertservice.payload.UserSummary;
 import com.manufacture.expertservice.repository.UserRepository;
 import com.manufacture.expertservice.security.CurrentUser;
 import com.manufacture.expertservice.security.UserPrincipal;
-import com.manufacture.expertservice.service.UserService;
+import com.manufacture.expertservice.service.impl.UserServiceImpl;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Log4j2
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -26,11 +28,9 @@ public class UserController {
     private UserRepository userRepository;
 
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
     @GetMapping("/user/me")
     //  @PreAuthorize("hasRole('USER')")
-    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_EXPERT' ,'ROLE_ADMIN')")
+  //  @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_EXPERT' ,'ROLE_ADMIN')")
     public UserSummary getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
         return userSummary;
@@ -54,9 +54,9 @@ public class UserController {
             .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
 
 
-        UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getRoles());
-
-        return userProfile;
+      //  UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName(), user.getCreatedAt(), user.getRoles());
+        return null;
+       // return userProfile;
     }
 
     /*  @GetMapping("/users/experts")
@@ -64,7 +64,7 @@ public class UserController {
           return userRepository.findAllExperts();
       } */
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping("/users/experts")
     public List<User> findAllExperts() {

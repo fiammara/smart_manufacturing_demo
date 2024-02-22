@@ -5,7 +5,8 @@ import com.manufacture.expertservice.model.ExcelData;
 import com.manufacture.expertservice.model.FileInfo;
 import com.manufacture.expertservice.model.UzsakymoForma;
 import com.manufacture.expertservice.service.FilesStorageService;
-import com.manufacture.expertservice.service.UzsakymoFormaService;
+import com.manufacture.expertservice.service.impl.OrderFormServiceImpl;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,14 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-
+@Log4j2
 @CrossOrigin("*")
 @RestController
 public class FilesController {
     @Autowired
-    UzsakymoFormaService uzsakymoFormaService;
+    OrderFormServiceImpl orderFormService;
     @Autowired
     FilesStorageService storageService;
 
@@ -135,9 +137,9 @@ public class FilesController {
 
     @PostMapping(value = "/api/addIdPrice/{orderid}")
     public ResponseEntity<?> getPrice(@PathVariable("orderid") String orderid, @RequestBody String predict_data) {
-        //System.out.println("orderid: " +orderid);
-        UzsakymoForma uzs = uzsakymoFormaService.getById(Long.valueOf(orderid));
-        String whoplacedorder = uzs.getCompanyid();
+
+        Optional<UzsakymoForma> uzs = orderFormService.getById(Long.valueOf(orderid));
+        String whoplacedorder = uzs.get().getCompanyid();
         String message = "";
         System.out.println("kaina: " + orderid);
         try {

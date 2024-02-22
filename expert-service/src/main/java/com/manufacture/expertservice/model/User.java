@@ -60,16 +60,17 @@ public class User extends DateAudit {
     private String password;
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
+  /*  @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>(); */
 
-    @OneToMany(cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "user")
-    private Set<ExpertRequest> request = new HashSet<>();
+ //   @OneToMany(cascade = CascadeType.ALL,
+      //  fetch = FetchType.LAZY
+       // mappedBy = "user"
+    //)
+  //  private Set<ExpertRequest> request = new HashSet<>();
 
 
    /* @OneToMany(cascade = CascadeType.ALL,

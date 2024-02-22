@@ -42,9 +42,10 @@ public class ExpertRequest {
     private Set<User> experts = new HashSet<>();
 
 
-    @OneToMany(cascade = CascadeType.ALL,
-        fetch = FetchType.LAZY,
-        mappedBy = "expertrequest")
+    @OneToMany(cascade = CascadeType.ALL
+      //  fetch = FetchType.LAZY,
+      //  mappedBy = "expertrequest"
+    )
 
     private Set<Evaluation> evaluations = new HashSet<>();
 

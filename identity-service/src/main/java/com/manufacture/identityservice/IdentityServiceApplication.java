@@ -1,7 +1,15 @@
 package com.manufacture.identityservice;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
+@SpringBootApplication
+@EnableDiscoveryClient
 public class IdentityServiceApplication {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-    }
+
+	public static void main(String[] args) {
+		SpringApplication.run(IdentityServiceApplication.class, args);
+	}
+
 }
