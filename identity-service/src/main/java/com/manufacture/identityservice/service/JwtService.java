@@ -27,7 +27,6 @@ import java.util.Map;
 @Log4j2
 public class JwtService {
 
-    public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
     @Value("${app.jwtSecret}")
     private String jwtSecret;
@@ -56,9 +55,6 @@ public class JwtService {
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
-    //    UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-      //  User userPrincipal = (User) authentication.getPrincipal();
-
         return createToken(claims, username);
     }
 

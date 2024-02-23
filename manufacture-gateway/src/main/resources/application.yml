@@ -17,7 +17,7 @@ spring:
           filters:
             - AuthenticationFilter
 
-        - id: expert-service
+        - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
              - Path=/orders/**

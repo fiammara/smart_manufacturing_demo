@@ -15,8 +15,8 @@ public class OrderController {
 
     @GetMapping("/order")
     public ResponseEntity<String> getTestString() {
-        log.info("Getting all registered companies");
-        String stringForTest = "order service controller";
+        log.info("Getting test orders");
+        String stringForTest = "Welcome from order service controller";
 
         return ResponseEntity.ok(stringForTest);
     }

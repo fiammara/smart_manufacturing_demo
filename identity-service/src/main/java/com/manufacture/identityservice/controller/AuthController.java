@@ -132,6 +132,7 @@ public class AuthController {
 
     @GetMapping("/validate")
     public ResponseEntity<String> validateToken(@RequestParam("token") String token) {
+        System.out.println("validating token " + token);
         authService.validateToken(token);
         return ResponseEntity.ok("Token is valid");
 
