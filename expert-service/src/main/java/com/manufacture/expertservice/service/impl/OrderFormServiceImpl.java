@@ -27,15 +27,12 @@ public class OrderFormServiceImpl implements OrderFormService {
 
         uzsakymoFormaRepository.save(uzsakymoForma);
 
-
     }
 
     @Override
     public Optional<UzsakymoForma> getById(long id) {
 
         return uzsakymoFormaRepository.findById(id);
-
-
 
     }
 }

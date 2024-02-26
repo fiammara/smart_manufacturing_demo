@@ -1,8 +1,6 @@
 package com.manufacture.expertservice.repository;
 
 
-import com.manufacture.expertservice.model.Role;
-import com.manufacture.expertservice.model.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

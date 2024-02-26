@@ -3,6 +3,7 @@ package com.manufacture.identityservice.controller;
 import com.manufacture.identityservice.dto.AuthenticationRequest;
 import com.manufacture.identityservice.dto.LoginRequest;
 import com.manufacture.identityservice.dto.SignUpRequest;
+import com.manufacture.identityservice.dto.UserIdentityAvailability;
 import com.manufacture.identityservice.repository.UserRepository;
 import com.manufacture.identityservice.service.AuthService;
 import com.manufacture.identityservice.service.JwtAuthenticationResponse;
@@ -136,6 +137,18 @@ public class AuthController {
         authService.validateToken(token);
         return ResponseEntity.ok("Token is valid");
 
+    }
+
+    @GetMapping("/user/checkUsernameAvailability")
+    public UserIdentityAvailability checkUsernameAvailability(@RequestParam(value = "username") String username) {
+        Boolean isAvailable = !userRepository.existsByUsername(username);
+        return new UserIdentityAvailability(isAvailable);
+    }
+
+    @GetMapping("/user/checkEmailAvailability")
+    public UserIdentityAvailability checkEmailAvailability(@RequestParam(value = "email") String email) {
+        Boolean isAvailable = !userRepository.existsByEmail(email);
+        return new UserIdentityAvailability(isAvailable);
     }
 
 }

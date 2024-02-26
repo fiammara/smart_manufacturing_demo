@@ -12,7 +12,15 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
@@ -23,59 +31,45 @@ import java.util.stream.Collectors;
 @Log4j2
 @CrossOrigin("*")
 @RestController
+@RequestMapping("/api/uploads")
 public class FilesController {
     @Autowired
     OrderFormServiceImpl orderFormService;
     @Autowired
-    FilesStorageService storageService;
+    FilesStorageService filesStorageService;
 
-    @PostMapping("/api/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload")
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
         try {
-            String tempData = storageService.getTempData(file);
-            storageService.save(file);
 
-            message = "Duomenys sėkmingai pateikti";
-            return ResponseEntity.status(HttpStatus.OK).body(tempData);
+            filesStorageService.save(file);
+            message = "File uploaded successfully: ";
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
     }
 
-    @PostMapping("/api/uploadOrder")
-    public ResponseEntity<?> uploadOrderFile(@RequestParam("file") MultipartFile file, @RequestParam("userid") String userid) {
+    @PostMapping()
+    public ResponseEntity<ResponseMessage> uploadOrderFile(@RequestParam("file") MultipartFile file, @RequestParam("userid") String userid) {
 
         String message = "";
         try {
-            // String tempOrderData =storageService.getTempOrderData(file);
-            String tempOrderData = storageService.saveOrder(file, userid);
-            message = "Užsakymo duomenys sėkmingai pateikti";
-            // System.out.println (tempOrderData);
-            // message = "Įkelta: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(tempOrderData);
+            String tempOrderData = filesStorageService.saveOrder(file, userid);
+            message = "Order data uploaded successfully: " + tempOrderData;
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
-            message = "Nepavyko pateikti užsakymo: " + file.getOriginalFilename() + "!";
+            message = "Error uploading data: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
     }
-    /*
-     * @PostMapping("/api/uploadOrder") public ResponseEntity<ResponseMessage>
-     * uploadOrderFile(@RequestParam("file") MultipartFile file) { String message =
-     * ""; try { storageService.saveOrder(file); message =
-     * "Užsakymo duomenys sėkmingai pateikti";
-     *
-     * return ResponseEntity.status(HttpStatus.OK).body(new
-     * ResponseMessage(message)); } catch (Exception e) { message =
-     * "Nepavyko pateikti užsakymo: " + file.getOriginalFilename() + "!"; return
-     * ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new
-     * ResponseMessage(message)); } }
-     */
 
-    @GetMapping("/api/files")
+
+    @GetMapping("/files")
     public ResponseEntity<List<FileInfo>> getListFiles() {
-        List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
+        List<FileInfo> fileInfos = filesStorageService.loadAll().map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                 .fromMethodName(FilesController.class, "getFile", path.getFileName().toString()).build().toString();
@@ -86,9 +80,9 @@ public class FilesController {
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
-    @GetMapping("/api/filesOrders")
+    @GetMapping("/files/orders")
     public ResponseEntity<List<FileInfo>> getListFilesOrders() {
-        List<FileInfo> fileInfos = storageService.loadAllFilesOrders().map(path -> {
+        List<FileInfo> fileInfos = filesStorageService.loadAllFilesOrders().map(path -> {
             String filename = path.getFileName().toString();
             String url = MvcUriComponentsBuilder
                 .fromMethodName(FilesController.class, "getFile", path.getFileName().toString()).build().toString();
@@ -99,58 +93,55 @@ public class FilesController {
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
-    @GetMapping("/api/files/{filename:.+}")
-    @ResponseBody
+    @GetMapping("/files/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        Resource file = storageService.load(filename);
+        Resource file = filesStorageService.load(filename);
         return ResponseEntity.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
             .body(file);
     }
 
-    @GetMapping("/api/uploads")
-    public List<ExcelData> findAllUploads() {
-        return storageService.findAllUploads();
+    @GetMapping()
+    public ResponseEntity<List<ExcelData>> findAllUploads() {
+        log.info("Getting all excel data uploads");
+        List<ExcelData> uploadsList = filesStorageService.findAllUploads();
+        if (uploadsList.isEmpty()) {
+            log.warn("Uploads list is empty {}", uploadsList);
+            return ResponseEntity.noContent().build();
+        }
+        log.debug("Uploads list size: {}", uploadsList::size);
+        return ResponseEntity.ok(uploadsList);
     }
 
-    /*
-     * @PostMapping(value="/addId/{sampleId}") public void
-     * learn(@PathVariable("sampleId") String sampleId) throws IOException{
-     * storageService.usePython(sampleId); }
-     */
-    @PostMapping(value = "/api/addId/{sampleId}")
-    public ResponseEntity<ResponseMessage> learn(@PathVariable("sampleId") String sampleId, @RequestBody String body) {
 
+    @PostMapping(value = "/addId/{sampleId}")
+    public ResponseEntity<ResponseMessage> learn(@PathVariable("sampleId") String sampleId, @RequestBody String body) {
 
         String message = "";
         try {
-            // storageService.usePython(sampleId);
-            storageService.getPythonModel(sampleId, body);
+            filesStorageService.getPythonModel(sampleId, body);
 
-            message = "Mokymas sėkmingas, galima pateikti užsakymą";
+            message = "Model training was successful, now you can upload an order.";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
-            message = "Mokymas nepavyko";
+            message = "Model training was not successful";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
     }
 
-    @PostMapping(value = "/api/addIdPrice/{orderid}")
-    public ResponseEntity<?> getPrice(@PathVariable("orderid") String orderid, @RequestBody String predict_data) {
+    @PostMapping(value = "/addIdPrice/{orderid}")
+    public ResponseEntity<ResponseMessage> getPrice(@PathVariable("orderid") String orderid, @RequestBody String predict_data) {
 
-        Optional<UzsakymoForma> uzs = orderFormService.getById(Long.valueOf(orderid));
-        String whoplacedorder = uzs.get().getCompanyid();
+        Optional<UzsakymoForma> order = orderFormService.getById(Long.valueOf(orderid));
+        String whoPlacedOrder = order.get().getCompanyid();
         String message = "";
-        System.out.println("kaina: " + orderid);
         try {
-            // storageService.usePython(sampleId);
 
-            String price = storageService.getPrice(orderid, whoplacedorder, predict_data);
-
-            message = "Užsakymo kaina: " + price + " Eur";
+            String price = filesStorageService.getPrice(orderid, whoPlacedOrder, predict_data);
+            message = "Order price is: " + price + " Eur";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
-            message = "Kainos apskaičiuoti nepavyko";
+            message = "Could not calculate an order price, error";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
 

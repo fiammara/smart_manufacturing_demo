@@ -1,8 +1,8 @@
 package com.manufacture.expertservice.service.impl;
 
-import com.manufacture.expertservice.model.TrainEntity;
+import com.manufacture.expertservice.model.TrainingEntity;
 import com.manufacture.expertservice.repository.TrainingEntityRepository;
-import com.manufacture.expertservice.service.TrainEntityService;
+import com.manufacture.expertservice.service.TrainingEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,28 +10,28 @@ import java.util.List;
 
 
 @Service
-public class TrainEntityServiceImpl implements TrainEntityService {
+public class TrainingEntityServiceImpl implements TrainingEntityService {
 
     @Autowired
     private TrainingEntityRepository trainEntityRepository;
 
     @Override
-    public List<TrainEntity> findAllTrainEntities() {
+    public List<TrainingEntity> findAllTrainEntities() {
 
         return trainEntityRepository.findAll();
     }
 
     @Override
-    public void addTrainEntity(TrainEntity entity) {
+    public void addTrainEntity(TrainingEntity entity) {
 
         trainEntityRepository.save(entity);
 
     }
 
     @Override
-    public TrainEntity findTrainEntity(String company) {
+    public TrainingEntity findTrainEntity(String company) {
 
-        TrainEntity ent = trainEntityRepository.findTop1ByCompanyOrderByIdDesc(company);
+        TrainingEntity ent = trainEntityRepository.findTop1ByCompanyOrderByIdDesc(company);
         return ent;
 
     }

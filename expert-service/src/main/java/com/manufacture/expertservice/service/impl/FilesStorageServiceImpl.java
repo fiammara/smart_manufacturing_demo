@@ -1,7 +1,7 @@
 package com.manufacture.expertservice.service.impl;
 
 import com.manufacture.expertservice.model.ExcelData;
-import com.manufacture.expertservice.model.TrainEntity;
+import com.manufacture.expertservice.model.TrainingEntity;
 import com.manufacture.expertservice.model.UzsakymoForma;
 import com.manufacture.expertservice.repository.ExcelDataRepository;
 import com.manufacture.expertservice.service.FilesStorageService;
@@ -35,6 +35,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
@@ -47,12 +48,10 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     private ExcelDataRepository excelDataRepository;
 
     @Autowired
-    private TrainEntityServiceImpl trainEntityService;
+    private TrainingEntityServiceImpl trainEntityService;
     @Autowired
     OrderFormServiceImpl uzsakymoFormaService;
     private final Path root = Paths.get("uploads");
-
-    // private List<ExcelDataDTO> postdata = new ArrayList<ExcelDataDTO>();
 
     public static JSONArray usersjson = new JSONArray();
     public static JSONObject usernested = new JSONObject();
@@ -68,7 +67,6 @@ public class FilesStorageServiceImpl implements FilesStorageService {
         try {
 
             Files.createDirectory(root);
-            // Files.createDirectory(root1);
 
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize folder for upload!");
@@ -79,7 +77,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     public void save(MultipartFile file) {
         try {
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
-            // saveToDatabase(file);
+
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
@@ -87,7 +85,6 @@ public class FilesStorageServiceImpl implements FilesStorageService {
 
     @Override
     public String saveOrder(MultipartFile file, String userid) {
-        //System.out.println ("fserviceuserid "+userid);
         try {
             // saveOrderToDatabase(file);
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
@@ -691,12 +688,12 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             price = new JSONObject(priceJson).getString("0");
             System.out.println(price);
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
-        UzsakymoForma uzs = uzsakymoFormaService.getById(Long.valueOf(orderid));
-        uzs.setPythonprice(price);
-        uzsakymoFormaService.addOrderForm(uzs);
+        Optional<UzsakymoForma> uzs = uzsakymoFormaService.getById(Long.valueOf(orderid));
+        uzs.get().setPythonprice(price);
+        uzsakymoFormaService.addOrderForm(uzs.get());
         return price;
     }
 
@@ -794,19 +791,19 @@ public class FilesStorageServiceImpl implements FilesStorageService {
                     try {
                         changeMap.set(user, new LinkedHashMap<>());
                     } catch (IllegalArgumentException e) {
-                        // TODO Auto-generated catch block
+
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {
-                        // TODO Auto-generated catch block
+
                         e.printStackTrace();
                     }
                     changeMap.setAccessible(false);
 
                 } catch (NoSuchFieldException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 } catch (SecurityException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 }
 
@@ -881,7 +878,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             String modelMse = obj.getString("model_mse");
             // System.out.println(modelId);
             // System.out.println(modelMse);
-            TrainEntity ent = new TrainEntity();
+            TrainingEntity ent = new TrainingEntity();
             ent.setCompany(sampleId);
             ent.setModel_id(modelId);
             ent.setModel_mse(modelMse);

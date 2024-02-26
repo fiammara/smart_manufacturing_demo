@@ -1,6 +1,7 @@
-package com.manufacture.expertservice.repository;
+package com.manufacture.orderservice.repository;
 
-import com.manufacture.expertservice.model.Order;
+
+import com.manufacture.orderservice.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,9 +1,6 @@
 package com.manufacture.expertservice.service.impl;
 
-import com.manufacture.expertservice.model.RoleName;
-import com.manufacture.expertservice.model.User;
 import com.manufacture.expertservice.repository.RoleRepository;
-import com.manufacture.expertservice.repository.UserRepository;
 import com.manufacture.expertservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

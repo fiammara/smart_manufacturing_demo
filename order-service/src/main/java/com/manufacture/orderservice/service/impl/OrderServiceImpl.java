@@ -1,8 +1,9 @@
-package com.manufacture.expertservice.service.impl;
+package com.manufacture.orderservice.service.impl;
 
-import com.manufacture.expertservice.model.Order;
-import com.manufacture.expertservice.repository.OrderRepository;
-import com.manufacture.expertservice.service.OrderService;
+
+import com.manufacture.orderservice.model.Order;
+import com.manufacture.orderservice.repository.OrderRepository;
+import com.manufacture.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

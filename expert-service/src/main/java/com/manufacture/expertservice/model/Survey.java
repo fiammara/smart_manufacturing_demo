@@ -18,7 +18,7 @@ public class Survey {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long customer_id;
-    //   @JsonFormat(pattern="dd/MM/yyyy")
+
     private String submit_date;
 
     private String customer;

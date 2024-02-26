@@ -1,14 +1,14 @@
-package com.manufacture.expertservice.model;
+package com.manufacture.identityservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class FileInfo {
+@NoArgsConstructor
+public class UserSummary {
+    private Long id;
+    private String username;
     private String name;
-    private String url;
-
 }

@@ -22,8 +22,6 @@ public interface FilesStorageService {
 
     public List<ExcelData> findAllUploads();
 
-    // public String usePython(String submitId) throws IOException;
-
     public String saveOrder(MultipartFile file, String userid);
 
     public Stream<Path> loadAllFilesOrders();
@@ -34,7 +32,5 @@ public interface FilesStorageService {
 
     public String getPrice(String orderid, String sampleId, String order);
 
-    //public String getTempOrderData(MultipartFile file);
 
-    // public String getPrice(String sampleId) throws IOException;
 }

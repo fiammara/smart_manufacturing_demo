@@ -3,8 +3,13 @@ package com.manufacture.expertservice.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import javax.persistence.*;
+
 
 @Data
 @NoArgsConstructor
@@ -69,8 +74,6 @@ public class ExpertTest {
     private String darbai4_min;
     private String darbai4_true;
     private String darbai4_max;
-
-
 
 
 }

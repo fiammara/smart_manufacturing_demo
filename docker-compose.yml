@@ -2,19 +2,19 @@
 version: '3.7'
 services:
   ## MySQL Docker Compose Config
-  mysql:
-    container_name: mysql
-    image: mysql_db
-    restart: always
+  db:
+    image: mysql:latest
     ports:
       - "3306:3306"
-    expose:
-      - "3306"
-    volumes:
-      - ./mysql-data:/data/db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: manufacture
+
 
   ## Eureka Service
-  registry-server:
+  registry-service:
     image: microservices/registry-service:latest
     container_name: registry-service
     ports:
@@ -30,8 +30,11 @@ services:
         - "8081:8081"
     environment:
         - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+          - manufacture-gateway
+          - registry-service
 
-  api-gateway:
+  manufacture-gateway:
     image: microservices/manufacture-gateway:latest
     container_name: manufacture-gateway
     ports:
@@ -57,12 +60,13 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - registry-service
-      - api-gateway
+      - manufacture-gateway
+
 
    ## App Service Docker Compose Config
-  app-service:
-    image: microservices/app-service:latest
-    container_name: app-service
+  manufacture-app:
+    image: microservices/manufacture-app:latest
+    container_name: manufacture-app
     ports:
       - "8085:8085"
     expose:
@@ -71,7 +75,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - registry-service
-      - api-gateway
+      - manufacture-gateway
 
 
 

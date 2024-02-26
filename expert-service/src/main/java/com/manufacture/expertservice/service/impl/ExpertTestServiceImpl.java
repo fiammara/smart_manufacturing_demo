@@ -36,19 +36,19 @@ public class ExpertTestServiceImpl implements ExpertTestService {
                 try {
                     changeMap.set(jsonobj, new LinkedHashMap<>());
                 } catch (IllegalArgumentException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 }
 
                 changeMap.setAccessible(false);
             } catch (NoSuchFieldException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             } catch (SecurityException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             }
 
@@ -106,13 +106,10 @@ public class ExpertTestServiceImpl implements ExpertTestService {
 
 
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
 
-        // System.out.println (test.getBendrosop1_min());
-        // System.out.println (test.getBendrosop1_true());
-        // System.out.println (test.getBendrosop1_max());
         System.out.println(jsonobj.toString());
     }
 }

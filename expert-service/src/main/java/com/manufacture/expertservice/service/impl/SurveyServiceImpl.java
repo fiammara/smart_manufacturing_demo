@@ -2,11 +2,9 @@ package com.manufacture.expertservice.service.impl;
 
 import com.manufacture.expertservice.model.ExpertRequest;
 import com.manufacture.expertservice.model.Survey;
-import com.manufacture.expertservice.model.User;
 import com.manufacture.expertservice.model.UzsakymoForma;
 import com.manufacture.expertservice.repository.ExpertRequestRepository;
 import com.manufacture.expertservice.repository.SurveyRepository;
-import com.manufacture.expertservice.repository.UserRepository;
 import com.manufacture.expertservice.repository.OrderFormRepository;
 import com.manufacture.expertservice.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
