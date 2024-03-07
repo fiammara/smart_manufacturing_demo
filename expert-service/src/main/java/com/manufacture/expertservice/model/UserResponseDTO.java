@@ -1,6 +1,6 @@
 package com.manufacture.expertservice.model;
 
-import com.manufacture.identityservice.entity.Role;
+//import com.manufacture.identityservice.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ public class UserResponseDTO {
     private Long id;
     private String username;
     private String name;
-    private Set<Role> roles;
+  //  private Set<Role> roles;
     private String password;
     private String email;
 }

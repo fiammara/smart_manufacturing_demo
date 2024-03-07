@@ -5,4 +5,5 @@ include 'identity-service'
 include 'manufacture-app'
 include 'registry-service'
 include 'manufacture-gateway'
+include 'email-service'
 

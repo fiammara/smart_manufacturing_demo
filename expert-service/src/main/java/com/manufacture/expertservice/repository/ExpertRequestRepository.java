@@ -14,8 +14,8 @@ import java.util.List;
 public interface ExpertRequestRepository extends JpaRepository<ExpertRequest, Long> {
     List<ExpertRequest> findByCompanyid(String companyid);
 
-    @Query("select t from ExpertRequest t join t.experts u where u.id = :id")
-    List<ExpertRequest> findReqByExpertId(@Param("id") Long id);
+   /* @Query("select t from ExpertRequest t join t.experts u where u.id = :id")
+    List<ExpertRequest> findReqByExpertId(@Param("id") Long id); */
 
     default ExpertRequest findByIdOrError(Long id) {
         return findById(id).orElseThrow(EntityNotFoundException::new);

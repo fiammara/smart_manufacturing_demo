@@ -23,7 +23,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Entity
 @Table(name = "usercompany")
-//@DiscriminatorValue("usercompany")
 public class UserCompany {
 
 

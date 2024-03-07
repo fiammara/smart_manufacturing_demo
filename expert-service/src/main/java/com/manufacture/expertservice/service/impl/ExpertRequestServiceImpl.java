@@ -26,26 +26,27 @@ public class ExpertRequestServiceImpl implements ExpertRequestService {
 
         return expertRequestRepository.findByCompanyid(usercompany_id);
     }
-    @Override
+   /* @Override
     public List<ExpertRequest> findSentRequests(Long expert_id) {
-        //User expertX=userRepository.findById(Long.valueOf(expert_id)).get();
-        //	expertX.getRequest()
+        User expertX=userRepository.findById(Long.valueOf(expert_id)).get();
+        	expertX.getRequest()
 
         List<ExpertRequest> listfiltered =
             expertRequestRepository.findReqByExpertId(expert_id);
-        //expertRequestRepository.findByExperts_Requestid(expert_id);
-        //	Set<User> experts = new HashSet<User>();
+        expertRequestRepository.findByExperts_Requestid(expert_id);
+        	Set<User> experts = new HashSet<User>();
 
-        //	List<ExpertRequest> ofrequests = new ArrayList<ExpertRequest>();
+        	List<ExpertRequest> ofrequests = new ArrayList<ExpertRequest>();
 
-        //	List<ExpertRequest> list= userRepository.g
+        	List<ExpertRequest> list= userRepository.g
 
-        //for (ExpertRequest req: listall) {
+        for (ExpertRequest req: listall) {
 
-        //	experts.add(req.getExperts());
-        //}
+        	experts.add(req.getExperts());
+        }
         return listfiltered;
-    }
+    } */
+
     @Override
     public ExpertRequest findRequestByID(Long id) {
 

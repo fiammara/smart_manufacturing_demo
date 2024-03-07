@@ -6,6 +6,8 @@ import com.manufacture.expertservice.model.FileInfo;
 import com.manufacture.expertservice.model.UzsakymoForma;
 import com.manufacture.expertservice.service.FilesStorageService;
 import com.manufacture.expertservice.service.impl.OrderFormServiceImpl;
+import com.manufacture.expertservice.swagger.DescriptionVariables;
+import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -27,7 +29,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
+@Api(tags = {DescriptionVariables.FILES})
 @Log4j2
 @CrossOrigin("*")
 @RestController

@@ -17,6 +17,13 @@ spring:
           filters:
             - AuthenticationFilter
 
+        - id: email-service
+          uri: lb://EMAIL-SERVICE
+          predicates:
+            - Path=/email/**
+          filters:
+            - AuthenticationFilter
+
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:

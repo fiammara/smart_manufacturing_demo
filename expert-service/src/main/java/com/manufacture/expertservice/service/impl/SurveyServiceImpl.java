@@ -29,10 +29,11 @@ public class SurveyServiceImpl implements SurveyService {
 
     @Autowired
     private SurveyRepository surveyRepository;
+   /* @Autowired
+    private UserRepository userRepository; */
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private OrderFormRepository uzsakymoFormaRepository;
+    private OrderFormRepository orderFormRepository;
 
     @Override
     public List<Survey> findAllSurveys() {
@@ -64,7 +65,7 @@ public class SurveyServiceImpl implements SurveyService {
     }
     @Override
     public ExpertRequest addExpertRequest(ExpertRequest expertRequest) {
-        Set<User> expertlist = new HashSet<User>();
+     /*   Set<User> expertlist = new HashSet<User>();
 
         Pattern pattern = Pattern.compile("\\d+");
         Matcher matcher = pattern.matcher(expertRequest.getSelectedOptions().toString());
@@ -75,23 +76,22 @@ public class SurveyServiceImpl implements SurveyService {
             list.add(Long.parseLong(matcher.group()));
         }
 
-        List<User> listu = userRepository.findByIdIn(list);
-        for (User u : listu) {
-            System.out.println(u.getEmail());
+        List<User> listOfUsers = userRepository.findByIdIn(list);
+        for (User u : listOfUsers) {
             expertlist.add(u);
         }
 
         String userid = expertRequest.getCompanyid();
         Long longuserid = Long.valueOf(userid);
         User company = userRepository.findById(longuserid).get();
-        UzsakymoForma forma = uzsakymoFormaRepository.findTop1ByCompanyidOrderByIdDesc(userid);
+        UzsakymoForma forma = orderFormRepository.findTop1ByCompanyidOrderByIdDesc(userid);
         expertRequest.setUser(company);
         expertRequest.setExperts(expertlist);
         expertRequest.setLastFormToEvaluateId(forma.getId());
 
         DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate localDate = LocalDate.now();
-        expertRequest.setSubmit_date(dtf2.format(localDate));
+        expertRequest.setSubmit_date(dtf2.format(localDate)); */
         return expertRequestRepository.save(expertRequest);
 
     }

@@ -1,7 +1,8 @@
 package com.manufacture.expertservice.service.impl;
 
-import com.manufacture.expertservice.repository.RoleRepository;
+/*
 import com.manufacture.expertservice.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,3 +22,4 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByRoles_(roleRepository.findByName(RoleName.ROLE_EXPERT));
     }
 }
+*/

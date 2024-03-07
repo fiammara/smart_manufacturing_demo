@@ -86,7 +86,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     @Override
     public String saveOrder(MultipartFile file, String userid) {
         try {
-            // saveOrderToDatabase(file);
+
             Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
 
             InputStream inputStream2 = new BufferedInputStream(file.getInputStream());
@@ -206,7 +206,6 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             edata.setFixed_customer(value34);
 
             long idofobj = excelDataService.addExcelOrderData(edata);
-            //System.out.println("idofobj" + idofobj);
             Field changeMap = orderTempJson.getClass().getDeclaredField("map");
             changeMap.setAccessible(true);
 
@@ -637,7 +636,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             predictdatafinalvalueArr.put(predictdataarrvalue);
 
         } catch (JSONException e3) {
-            // TODO Auto-generated catch block
+
             e3.printStackTrace();
         }
 
@@ -651,19 +650,19 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             try {
                 changeMap.set(test, new LinkedHashMap<>());
             } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
+
                 e.printStackTrace();
             }
 
             changeMap.setAccessible(false);
         } catch (NoSuchFieldException e2) {
-            // TODO Auto-generated catch block
+
             e2.printStackTrace();
         } catch (SecurityException e2) {
-            // TODO Auto-generated catch block
+
             e2.printStackTrace();
         }
 
@@ -671,7 +670,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             test.put("model_id", foundTrainModelId);
             test.put("predict_data", predictdatafinalvalueArr);
         } catch (JSONException e1) {
-            // TODO Auto-generated catch block
+
             e1.printStackTrace();
         }
 
@@ -686,7 +685,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             String priceJson = new JSONObject(restt).getString("ML_kaina");
 
             price = new JSONObject(priceJson).getString("0");
-            System.out.println(price);
+
         } catch (JSONException e) {
 
             e.printStackTrace();
@@ -846,7 +845,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
                     user.put("fixed_customer", value35);
                     usersjson.put(user);
                 } catch (JSONException e) {
-                    // TODO Auto-generated catch block
+
                     e.printStackTrace();
                 }
 
@@ -868,16 +867,13 @@ public class FilesStorageServiceImpl implements FilesStorageService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<String>(jsonForTraining, headers);
 
-        // System.out.println(restTemplate.postForObject(
-        // "http://158.129.140.156:5000/train", entity, String.class ));
         String jsnstr = restTemplate.postForObject("http://158.129.140.156:5000/train", entity, String.class);
         JSONObject obj;
         try {
             obj = new JSONObject(jsnstr);
             String modelId = obj.getString("model_id");
             String modelMse = obj.getString("model_mse");
-            // System.out.println(modelId);
-            // System.out.println(modelMse);
+
             TrainingEntity ent = new TrainingEntity();
             ent.setCompany(sampleId);
             ent.setModel_id(modelId);
@@ -885,7 +881,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             trainEntityService.addTrainEntity(ent);
 
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
 

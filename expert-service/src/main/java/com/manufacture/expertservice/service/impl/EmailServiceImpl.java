@@ -27,17 +27,7 @@ public class EmailServiceImpl implements EmailService {
 
     }
 
-    @Bean
-    public JavaMailSender javaMailService() {
-        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
-        javaMailSender.setHost("localhost");
-        javaMailSender.setPort(3000);
-
-        javaMailSender.setJavaMailProperties(getMailProperties());
-
-        return javaMailSender;
-    }
     @Override
     public Properties getMailProperties() {
         Properties properties = new Properties();

@@ -55,12 +55,12 @@ public class EvaluationServiceImpl implements EvaluationService {
         LocalDate localDate = LocalDate.now();
         evaluation.setSubmit_date(dtf2.format(localDate));
 
-        Set<Evaluation> setOfEv = found.getEvaluations();
+        Set<Evaluation> setOfEvaluations = found.getEvaluations();
 
-        if (setOfEv != null) {
+        if (setOfEvaluations != null) {
 
-            setOfEv.add(evaluation);
-            found.setEvaluations(setOfEv);
+            setOfEvaluations.add(evaluation);
+            found.setEvaluations(setOfEvaluations);
         } else {
             Set<Evaluation> newSet = new HashSet<Evaluation>();
             newSet.add(evaluation);

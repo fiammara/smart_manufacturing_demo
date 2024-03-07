@@ -1,6 +1,6 @@
 package com.manufacture.expertservice.exception;
 
-import com.manufacture.expertservice.message.ResponseMessage;
+/*import com.manufacture.expertservice.message.ResponseMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -15,4 +15,4 @@ public class FileUploadExceptionAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<ResponseMessage> handleMaxSizeException(MaxUploadSizeExceededException exc) {
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage("File too large!"));
     }
-}
+} */

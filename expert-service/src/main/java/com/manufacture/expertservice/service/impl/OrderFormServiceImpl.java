@@ -14,25 +14,25 @@ import java.util.Optional;
 public class OrderFormServiceImpl implements OrderFormService {
 
     @Autowired
-    private OrderFormRepository uzsakymoFormaRepository;
+    private OrderFormRepository orderFormRepository;
 
     @Override
     public List<UzsakymoForma> findAllForms() {
 
-        return uzsakymoFormaRepository.findAll();
+        return orderFormRepository.findAll();
     }
 
     @Override
     public void addOrderForm(UzsakymoForma uzsakymoForma) {
 
-        uzsakymoFormaRepository.save(uzsakymoForma);
+        orderFormRepository.save(uzsakymoForma);
 
     }
 
     @Override
     public Optional<UzsakymoForma> getById(long id) {
 
-        return uzsakymoFormaRepository.findById(id);
+        return orderFormRepository.findById(id);
 
     }
 }
